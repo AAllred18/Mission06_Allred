@@ -1,0 +1,59 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model List<Movie>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<h2>Movie Library</h2>
+
+<br />
+
+<table class="table table-bordered table-striped table-hover custom-table">
+    <thead>
+        <tr>
+            <td>Category</td>
+            <td>Movie Title</td>
+            <td>Year</td>
+            <td>Director</td>
+            <td>MPA Rating</td>
+            <td>Edited</td>
+            <td>Lent to</td>
+            <td>Movie Copied to Plex</td>
+            <td>Notes</td>
+        </tr>
+    </thead>
+
+    @foreach (var row in Model)
+    {
+        <tbody>
+            <tr>
+                <td>@row.Category?.CategoryName</td>
+                <td>@row.MovieTitle</td>
+                <td>@row.MovieYear</td>
+                <td>@row.MovieDirector</td>
+                <td>@row.MovieRating</td>
+                <td>@row.MovieEdited</td>
+                <td>@row.MovieLent</td>
+                <td>@row.MoviePlex</td>
+                <td>@row.MovieNotes</td>
+
+                <td><a class = "btn btn-info" asp-controller="Home" asp-action="Edit" asp-route-id="@row.MovieID">Edit</a></td>
+                <td><a class="btn btn-danger" asp-controller="Home" asp-action="Delete" asp-route-id="@row.MovieID">Delete</a></td>
+            </tr>    
+        </tbody>
+    }
+
+
+
+</table>
+
+<br />
+<div style="height: 25px;"></div>
+<br />
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Mission06_Allred.Models;
 
@@ -10,9 +11,11 @@ using Mission06_Allred.Models;
 namespace Mission06_Allred.Migrations
 {
     [DbContext(typeof(MovieSubmissionContext))]
-    partial class MovieSubmissionContextModelSnapshot : ModelSnapshot
+    [Migration("20250219214556_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.13");
@@ -80,13 +83,15 @@ namespace Mission06_Allred.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("CategoryID")
+                    b.Property<int>("CategoryID")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("MovieDirector")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<bool>("MovieEdited")
+                    b.Property<bool?>("MovieEdited")
+                        .IsRequired()
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("MovieLent")
@@ -95,10 +100,12 @@ namespace Mission06_Allred.Migrations
                     b.Property<string>("MovieNotes")
                         .HasColumnType("TEXT");
 
-                    b.Property<bool>("MoviePlex")
+                    b.Property<bool?>("MoviePlex")
+                        .IsRequired()
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("MovieRating")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("MovieTitle")
@@ -119,7 +126,9 @@ namespace Mission06_Allred.Migrations
                 {
                     b.HasOne("Mission06_Allred.Models.Category", "Category")
                         .WithMany()
-                        .HasForeignKey("CategoryID");
+                        .HasForeignKey("CategoryID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Category");
                 });

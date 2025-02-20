@@ -31,18 +31,76 @@ namespace Mission06_Allred.Controllers
         }
 
         [HttpGet]
-        public IActionResult AddMovie()
+        public IActionResult MovieForm()
         {
-            return View();
+            ViewBag.categories = _context.Category.ToList();
+
+            return View("MovieForm", new Movie());
         }
 
         [HttpPost]
-        public IActionResult AddMovie(Movie response)
+        public IActionResult MovieForm(Movie response)
         {
-            _context.Movies.Add(response); //Add record to database
+            if (ModelState.IsValid)
+            {
+                _context.Movies.Add(response); //Add record to database
+                _context.SaveChanges();
+
+                return View("Confirmation", response);
+            }
+            else //Invalid data
+            {
+                ViewBag.categories = _context.Category.ToList();
+
+                return View(response);
+            }
+        }
+
+        public IActionResult ViewMovies()
+        {
+            //Linq
+            var movies = _context.Movies.ToList();
+
+            ViewBag.categories = _context.Category.ToList();
+
+            return View(movies);
+        }
+
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            var recordToEdit = _context.Movies
+                .Single(m => m.MovieID == id);
+
+            ViewBag.categories = _context.Category.ToList();
+
+            return View("MovieForm", recordToEdit);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Movie updatedMovie)
+        {
+            _context.Update(updatedMovie);
             _context.SaveChanges();
 
-            return View("Confirmation", response);
+            return RedirectToAction("ViewMovies");
         }
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            var recordToDelete = _context.Movies
+                .Single(m => m.MovieID == id);
+
+            return View(recordToDelete);
+        }
+        [HttpPost]
+        public IActionResult Delete(Movie movie)
+        {
+            _context.Movies.Remove(movie);
+            _context.SaveChanges();
+
+            return RedirectToAction("ViewMovies");
+        }
+
     }
 }
