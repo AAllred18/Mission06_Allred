@@ -31,11 +31,11 @@ namespace Mission06_Allred.Migrations
                 {
                     MovieID = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    CategoryID = table.Column<int>(type: "INTEGER", nullable: false),
+                    CategoryID = table.Column<int>(type: "INTEGER", nullable: true),
                     MovieTitle = table.Column<string>(type: "TEXT", nullable: false),
                     MovieYear = table.Column<int>(type: "INTEGER", nullable: false),
-                    MovieDirector = table.Column<string>(type: "TEXT", nullable: false),
-                    MovieRating = table.Column<string>(type: "TEXT", nullable: false),
+                    MovieDirector = table.Column<string>(type: "TEXT", nullable: true),
+                    MovieRating = table.Column<string>(type: "TEXT", nullable: true),
                     MovieEdited = table.Column<bool>(type: "INTEGER", nullable: false),
                     MovieLent = table.Column<string>(type: "TEXT", nullable: true),
                     MoviePlex = table.Column<bool>(type: "INTEGER", nullable: false),
@@ -48,8 +48,7 @@ namespace Mission06_Allred.Migrations
                         name: "FK_Movies_Category_CategoryID",
                         column: x => x.CategoryID,
                         principalTable: "Category",
-                        principalColumn: "CategoryID",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "CategoryID");
                 });
 
             migrationBuilder.InsertData(

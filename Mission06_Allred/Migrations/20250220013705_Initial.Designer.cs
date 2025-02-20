@@ -11,8 +11,8 @@ using Mission06_Allred.Models;
 namespace Mission06_Allred.Migrations
 {
     [DbContext(typeof(MovieSubmissionContext))]
-    [Migration("20250220010313_Initial2")]
-    partial class Initial2
+    [Migration("20250220013705_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
